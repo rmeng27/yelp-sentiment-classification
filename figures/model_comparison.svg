@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="540" viewBox="0 0 1100 540">
+<style>
+text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#1f2937}
+.title{font-size:28px;font-weight:700}.sub{font-size:16px;fill:#6b7280}.label{font-size:18px;font-weight:600}.metric{font-size:15px}
+</style>
+<rect width="1100" height="540" fill="white"/>
+<text x="60" y="48" class="title">Held-Out Yelp Sentiment Classification Performance</text>
+<text x="60" y="76" class="sub">Accuracy and ROC-AUC by tuned model</text>
+<text x="360" y="115" class="sub">Accuracy</text><text x="700" y="115" class="sub">ROC-AUC</text>
+<text x="60" y="170" class="label">Logistic Regression</text>
+<rect x="360" y="145" width="304" height="34" rx="6" fill="#2563eb"/><text x="675" y="168" class="metric">89.3%</text>
+<rect x="700" y="145" width="269" height="34" rx="6" fill="#7c3aed"/><text x="980" y="168" class="metric">0.960</text>
+<text x="60" y="260" class="label">XGBoost</text>
+<rect x="360" y="235" width="293" height="34" rx="6" fill="#60a5fa"/><text x="664" y="258" class="metric">86.2%</text>
+<rect x="700" y="235" width="263" height="34" rx="6" fill="#a78bfa"/><text x="974" y="258" class="metric">0.939</text>
+<text x="60" y="350" class="label">Random Forest</text>
+<rect x="360" y="325" width="287" height="34" rx="6" fill="#93c5fd"/><text x="658" y="348" class="metric">84.3%</text>
+<rect x="700" y="325" width="260" height="34" rx="6" fill="#c4b5fd"/><text x="971" y="348" class="metric">0.930</text>
+<line x1="360" y1="410" x2="1000" y2="410" stroke="#e5e7eb"/>
+<text x="60" y="455" class="sub">Best model: Logistic Regression - 89.3% test accuracy - 0.960 ROC-AUC</text>
+<text x="60" y="485" class="sub">Feature representation: TF-IDF, up to 5,000 sparse text features</text>
+</svg>
