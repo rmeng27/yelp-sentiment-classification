@@ -1,14 +1,14 @@
 # Yelp Review Sentiment Classification
 
 <p align="center">
-  <strong>Binary sentiment classification of Yelp reviews using TF-IDF features and supervised machine-learning models.</strong>
+  <strong>Binary sentiment classification of Yelp reviews using TF-IDF and supervised machine learning.</strong>
 </p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-NLP-3776AB?logo=python&logoColor=white" alt="Python">
   <img src="https://img.shields.io/badge/TF--IDF-Text%20Features-4B8BBE" alt="TF-IDF">
-  <img src="https://img.shields.io/badge/Best%20Accuracy-89.3%25-2E8B57" alt="Accuracy">
-  <img src="https://img.shields.io/badge/ROC--AUC-0.96-6C63FF" alt="ROC-AUC">
+  <img src="https://img.shields.io/badge/Best%20Accuracy-89.3%25-2E8B57" alt="Accuracy 89.3%">
+  <img src="https://img.shields.io/badge/Best%20ROC--AUC-0.96-6C63FF" alt="ROC-AUC 0.96">
 </p>
 
 <p align="center">
@@ -17,77 +17,86 @@
 
 ## Overview
 
-This project builds an NLP classification pipeline to identify **positive vs. negative Yelp reviews** from review text.
+This project builds an NLP pipeline to classify Yelp review text as **positive or negative sentiment**.
 
-A sampled subset of the Hugging Face `yelp_review_full` dataset is converted from five-star labels into a binary task:
+Reviews are cleaned and transformed with **TF-IDF vectorization**, then evaluated with three supervised-learning approaches:
 
-- 1-2 stars -> negative
-- 4-5 stars -> positive
-- 3-star neutral reviews -> excluded
-
-Text is cleaned, transformed with **TF-IDF**, and evaluated across Logistic Regression, Random Forest, and XGBoost. Hyperparameters are tuned with 5-fold grid search.
-
-The best-performing model is **Logistic Regression**, achieving **89.3% test accuracy** and **0.960 ROC-AUC**.
-
-## Model Results
-
-| Model | Test Accuracy | ROC-AUC |
-|---|---:|---:|
-| **Logistic Regression** | **89.3%** | **0.960** |
-| XGBoost | 86.2% | 0.939 |
-| Random Forest | 84.3% | 0.930 |
-
-## Pipeline
-
-```text
-Yelp review text
-  → text normalization
-  → binary sentiment labels
-  → stratified train/test split
-  → TF-IDF vectorization
-  → model tuning with GridSearchCV
-  → held-out evaluation
-```
-
-## Methods
-
-- text normalization and stopword removal
-- TF-IDF vectorization with a 5,000-feature cap
-- stratified train/test split
 - Logistic Regression
 - Random Forest
 - XGBoost
-- 5-fold hyperparameter search
-- evaluation with accuracy, precision, recall, F1-score, and ROC-AUC
 
-## Interpretation
+The strongest model was **Logistic Regression**, achieving **89.3% test accuracy** and **0.96 ROC-AUC**.
 
-The linear Logistic Regression model performs best on this high-dimensional sparse feature space. That result is consistent with the structure of TF-IDF text representations, where linear decision boundaries can be highly effective and computationally efficient.
+## Modeling Workflow
+
+```text
+Yelp review text
+  → text cleaning
+  → sentiment label construction
+  → TF-IDF vectorization
+  → model tuning / training
+  → held-out test evaluation
+  → model comparison
+```
+
+## Labeling Strategy
+
+The analysis converts star ratings into a binary sentiment task:
+
+- **1–2 stars** → negative
+- **4–5 stars** → positive
+- **3-star reviews** → removed as neutral / ambiguous
+
+Class balance was checked before modeling; oversampling was considered but not retained when it was not needed.
+
+## Model Comparison
+
+| Model | Test Accuracy | ROC-AUC |
+|---|---:|---:|
+| **Logistic Regression** | **89.3%** | **0.96** |
+| XGBoost | 86.2% | 0.94 |
+| Random Forest | 84.3% | 0.93 |
+
+Logistic Regression performed best on the high-dimensional sparse TF-IDF representation, where a linear decision boundary was particularly effective.
+
+## Evaluation
+
+Model performance was compared using:
+
+- accuracy
+- precision
+- recall
+- F1-score
+- ROC-AUC
+
+The project uses held-out test performance as the primary evidence for model comparison rather than relying on training fit.
 
 ## Repository Structure
 
 ```text
 yelp-sentiment-classification/
 ├── README.md
-├── src/
-│   └── train_models.py
-├── requirements.txt
+├── analysis/
+│   └── original_notebook.html
 └── figures/
     └── model_comparison.svg
 ```
 
-## Reproducibility
+## View the Analysis
 
-The cleaned portfolio script in [`src/train_models.py`](src/train_models.py) reproduces the project workflow using the public Hugging Face Yelp Review Full dataset.
+The original rendered analysis is preserved in `analysis/original_notebook.html`. It contains the preprocessing, exploratory text analysis, TF-IDF feature construction, model tuning, evaluation output, and final comparison.
+
+## Interpretation
+
+The result is a useful reminder that more complex models do not automatically outperform simpler ones. For this sparse text representation, Logistic Regression produced the strongest generalization performance among the tested models.
 
 ## Limitations
 
-- The project simplifies a five-class rating problem into binary sentiment.
-- Neutral 3-star reviews are excluded.
-- TF-IDF ignores word order and richer contextual semantics.
-- Results are based on a sampled subset rather than the full Yelp corpus.
-- The original academic analysis combined sampled source splits before creating a new stratified holdout; the portfolio script preserves that workflow for reproducibility.
+- Binary labeling removes neutral 3-star reviews and simplifies sentiment.
+- Performance reflects the sampled project dataset rather than all Yelp reviews.
+- TF-IDF captures term importance but not the full semantic structure of language.
+- Manually written example reviews were exploratory checks, not formal generalization evidence.
 
 ---
 
-<sub>Graduate machine-learning / NLP project, 2026.</sub>
+<sub>Graduate machine-learning project, 2026.</sub>
